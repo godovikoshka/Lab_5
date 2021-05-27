@@ -1,6 +1,6 @@
 import org.scalacheck.Prop.forAll
-//import org.scalacheck.util.Pretty
-//import org.scalacheck.{Arbitrary, Prop, Shrink}
+import org.scalacheck.util.Pretty
+import org.scalacheck.{Arbitrary, Prop, Shrink}
 import java.time.Duration
 
 

@@ -1,0 +1,33 @@
+import org.scalacheck.Prop.forAll
+//import org.scalacheck.util.Pretty
+//import org.scalacheck.{Arbitrary, Prop, Shrink}
+import java.time.Duration
+
+
+trait CommutativeGroup[A] {
+  def combine(l: A, r: A): A
+}
+
+object CommutativeGroup
+{
+  //def laws[A: Arbitrary: Shrink](implicit sg: CommutativeGroup[A], p: A => Pretty):List[Prop]={
+    //List(
+      //forAll { (a: A, b: A, c: A) => sg.combine(sg.combine(a,b),c) == sg.combine(a, sg.combine(b, c)) },
+      //forAll { (a: A, b: A) => sg.combine(a, b) == sg.combine(b, a)}
+    //)
+  //}
+  implicit val asgDuration = new CommutativeGroup[Duration] {
+    override def combine(l: Duration, r: Duration): Duration = {
+      l.plus(r)
+    }
+  }
+}
+
+object Lab_5 {
+  def main(args: Array[String]): Unit = {
+    //CommutativeGroup.laws[Duration].foreach(_.check())
+    val sg = CommutativeGroup.asgDuration
+    forAll { (a: Duration, b: Duration, c: Duration) => sg.combine(sg.combine(a,b),c) == sg.combine(a, sg.combine(b, c)) }.check()
+    forAll { (a: Duration, b: Duration) => sg.combine(a, b) == sg.combine(b, a)}.check()
+  }
+}
